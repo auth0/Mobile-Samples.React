@@ -1,167 +1,90 @@
 /**
- * Sample Lock + React Native App
- * https://github.com/auth0/react-native-lock-ios
+ * Sample React Native App
+ * https://github.com/facebook/react-native
  */
-'use strict';
 
-var React = require('react-native');
-var {
+import React, {
   AppRegistry,
+  Component,
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableHighlight,
-} = React;
+  Navigator,
+  TouchableHighlight
+} from 'react-native';
 
-var HeaderView = require('./header');
-var TokenView = require('./token');
+import WelcomeView from './welcome-view';
+import ProfileView from './profile-view';
 
-var Auth0credentials = require('./auth0_credentials');
-var Auth0Lock = require('react-native-lock-ios');
-var lock = new Auth0Lock({clientId: Auth0credentials.clientId, domain: Auth0credentials.domain});
-
-var LockReactProject = React.createClass({
-  getInitialState: function() {
-    return {
-      logged: false,
-    };
-  },
-  render: function() {
-    if (this.state.logged) {
+class Auth0Sample extends Component {
+  render() {
       return (
-        <View style={styles.container}>
-          <HeaderView/>
-          <TokenView 
-            style={styles.token}
-            username={this.state.profile.name}
-            email={this.state.profile.email}
-            jwt={this.state.token.idToken}
-            refreshToken={this.state.token.refreshToken}
-          />
-          <View style={styles.actionContainer}>
-            <TouchableHighlight style={styles.actionButton} onPress={this._onLogout}>
-              <Text style={styles.actionButtonText}>Logout</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      );
-    }
-    return (
-      <View style={styles.container}>
-        <HeaderView/>
-        <Text style={styles.message}>
-          Please tap on one of the 'Login ...' buttons to continue.
-        </Text>
-        <View style={styles.actionContainer}>
-          <TouchableHighlight style={styles.actionButton} onPress={this._onShowLock}>
-            <Text style={styles.actionButtonText}>Login native</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.actionButton} onPress={this._onShowLockSMS}>
-            <Text style={styles.actionButtonText}>Login with SMS</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.actionButton} onPress={this._onShowLockEmail}>
-            <Text style={styles.actionButtonText}>Login with Email</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+        <Navigator style={styles.navigator}
+          initialRoute={{ name: "Welcome"}}
+          renderScene= { this.renderScene }
+          navigationBar={
+             <Navigator.NavigationBar
+               style={ styles.nav }
+               routeMapper={NavigationBarRouteMapper} />
+             }
+        />
     );
+  }
+
+  renderScene(route, navigator) {
+    if (route.name == "Welcome") {
+      return <WelcomeView navigator={navigator} {...route.passProps} />
+    }
+    if (route.name == "Profile") {
+      return <ProfileView navigator={navigator} {...route.passProps} />
+    }
+  }
+}
+
+var NavigationBarRouteMapper = {
+  LeftButton(route, navigator, index, navState) {
+    if(index > 0) {
+      return (
+        <TouchableHighlight
+          underlayColor="transparent"
+          onPress={() => { if (index > 0) { navigator.pop() } }}>
+          <Text style={ styles.leftNavButtonText }>Back</Text>
+        </TouchableHighlight>)
+    }
+    else { return null }
   },
-  _onShowLock: function() {
-    lock.show({
-      connections: ["google-oauth2", "facebook", "twitter"],
-      closable: true,
-      authParams: {
-        scope: "openid email offline_access",
-      },
-    }, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.setState({
-        token: token,
-        profile: profile,
-        logged: true,
-      });
-    });
+
+  RightButton(route, navigator, index, navState) {
+    return null
   },
-  _onShowLockSMS: function() {
-    lock.show({
-      connections: ["sms"],
-      closable: true,
-      authParams: {
-        scope: "openid email offline_access",
-      },
-    }, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.setState({
-        token: token,
-        profile: profile,
-        logged: true,
-      });
-    });
+
+  Title(route, navigator, index, navState) {
+    return <Text style={ styles.title }>Auth0 Sample</Text>
+  }
+};
+
+const styles = StyleSheet.create({
+  navigator: {
+    flex: 1,
   },
-  _onShowLockEmail: function() {
-    lock.show({
-      connections: ["email"],
-      useMagicLink: true,
-      closable: true,
-      authParams: {
-        scope: "openid email offline_access",
-      },
-    }, (err, profile, token) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.setState({
-        token: token,
-        profile: profile,
-        logged: true,
-      });
-    });
+  title: {
+    marginTop:4,
+    fontSize:16
   },
-  _onLogout: function() {
-    this.setState({logged: false});
+  leftNavButtonText: {
+   	fontSize: 18,
+    marginLeft:13,
+    marginTop:2
   },
+  rightNavButtonText: {
+    fontSize: 18,
+    marginRight:13,
+    marginTop:2
+  },
+  nav: {
+    height: 60,
+    backgroundColor: '#efefef'
+  }
 });
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#F5FCFF',
-  },
-  token: {
-    flex: 1,
-  },
-  actionContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  actionButton: {
-    flex: 1,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#16214D',
-    borderRadius: 5,
-    margin: 8,
-  },
-  actionButtonText: {
-    color: '#ffffff',
-  },
-  message: {
-    flex: 1,
-    fontFamily: 'HelveticaNeue-Thin',
-    fontSize: 14,
-    alignSelf: 'center',
-  },
-});
-
-AppRegistry.registerComponent('LockReactProject', () => LockReactProject);
+AppRegistry.registerComponent('auth0-sample', () => Auth0Sample);

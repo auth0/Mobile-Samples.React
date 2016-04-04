@@ -1,33 +1,20 @@
-# Lock mobile sample for React-Native
+# Auth0 + React Native + API Seed
 
-### Requirements
+This is the seed project you need to use if you're going to create an app that will use Auth0, React Native and an API that you're going to be developing. That API can be in any language.
 
-- React Native 0.16
+## Configuring the example
 
-### Install the dependencies
+You must set your Auth0 `ClientId` and `Domain` in this sample so that it works. For that, just open the `auth0-credentials.js` file and replace the `{CLIENT_ID}` and `{DOMAIN}` fields with your account information.
 
-To run the applications you'll have to install the dependencies by running
+## Running the example
 
-```bash
-npm i
-```
+First run `npm install` and then check the platform specific steps.
 
-### Running the application 
+### iOS
+1. `pod install --project-directory=ios`
+2. `react-native run-ios`
 
-#### Android
+### Android
+1. `react-native run-android`
 
-To run the application in android simply execute
-
-```bash
-react-native run-android
-```
-
-#### iOS
-
-First you'll need to install the dependencies by running (from the ios folder)
-
-```bash
-pod install
-```
-
-And then open the project `<app>.xcworkspace` in XCode and hit *Run*
+Enjoy your React Native app now :).
