@@ -34,9 +34,6 @@
 #import "A0UsernameValidator.h"
 #import "A0PasswordValidator.h"
 
-#if __has_include("A0PasswordManager.h")
-#import "A0PasswordManager.h"
-#endif
 #import "UIViewController+LockNotification.h"
 #import "A0AuthParameters.h"
 #import "A0Connection.h"
@@ -45,6 +42,7 @@
 #import "A0Lock.h"
 #import "NSObject+A0APIClientProvider.h"
 #import "NSError+A0APIError.h"
+#import "NSError+A0LockErrors.h"
 #import "Constants.h"
 #import "A0SignUpView.h"
 #import <Masonry/Masonry.h>
@@ -90,6 +88,7 @@
     self.signUpView.identifierType = self.forceUsername ? A0SignUpIndentifierTypeUsername : A0SignUpIndentifierTypeEmail;
     self.signUpView.title = self.customMessage;
     self.signUpView.delegate = self;
+    self.signUpView.identifier = _identifier;
 
     if (self.defaultConnection) {
         self.parameters[A0ParameterConnection] = self.defaultConnection.name;
@@ -110,6 +109,10 @@
 
 - (void)addDisclaimerSubview:(UIView *)view {
     self.userDisclaimerView = view;
+}
+
+- (NSString *)identifier {
+    return self.signUpView ? self.signUpView.identifier : _identifier;
 }
 
 #pragma mark - A0KeyboardEnabledView
@@ -162,8 +165,13 @@
         A0APIClientError failure = ^(NSError *error) {
             [self postSignUpErrorNotificationWithError:error];
             dispatch_async(dispatch_get_main_queue(), ^{
+                if ([error a0_mfaRequired]) {
+                    completionHandler(YES);
+                    self.onMFARequired();
+                    return;
+                }
                 NSString *title = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedDescription : A0LocalizedString(@"There was an error signing up");
-                NSString *message = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedFailureReason : [A0Errors localizedStringForSignUpError:error];
+                NSString *message = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedFailureReason : [error a0_localizedStringForSignUpError];
                 [A0Alert showInController:self errorAlert:^(A0Alert *alert) {
                     alert.title = title;
                     alert.message = message;

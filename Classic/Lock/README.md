@@ -8,11 +8,8 @@ You must set your Auth0 `ClientId` and `Domain` in this sample so that it works.
 
 ## Running the example
 
-First run `npm install` and then check the platform specific steps.
-
 ### iOS
-1. `pod install --project-directory=ios`
-2. `react-native run-ios`
+1. `react-native run-ios`
 
 ### Android
 1. `react-native run-android`

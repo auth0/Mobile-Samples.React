@@ -41,6 +41,7 @@
 #import "A0Alert.h"
 #import "Constants.h"
 #import "A0KeyboardHandler.h"
+#import "NSError+A0LockErrors.h"
 #import <Masonry/Masonry.h>
 
 @interface A0LockSignUpViewController () <A0SmallSocialServiceCollectionViewDelegate>
@@ -72,9 +73,6 @@ AUTH0_DYNAMIC_LOGGER_METHODS
     self = [super init];
     if (self) {
         _lock = lock;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            self.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
         _loginAfterSignUp = YES;
         _authenticationParameters = [A0AuthParameters newDefaultParams];
         _connections = @[];
@@ -181,7 +179,11 @@ AUTH0_DYNAMIC_LOGGER_METHODS
 }
 
 - (A0LockControllerSupportedOrientation)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    A0LockControllerSupportedOrientation orientations = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        orientations = UIInterfaceOrientationMaskAll;
+    }
+    return orientations;
 }
 
 - (IBAction)dismiss:(id)sender {

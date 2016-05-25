@@ -22,22 +22,11 @@
 
 #import <Foundation/Foundation.h>
 #import "A0ErrorCode.h"
+#import "NSError+A0AuthAPIError.h"
 
 @interface NSError (A0APIError)
 
-- (NSDictionary *)a0_payload;
-
-- (NSString *)a0_error;
-
-- (NSString *)a0_errorDescription;
-
-- (NSString *)a0_code;
-
 - (NSError *)a0_errorWithPayload:(NSDictionary *)payload;
-
-- (BOOL)a0_auth0ErrorWithCode:(A0ErrorCode)code;
-
-- (BOOL)a0_cancelledSocialAuthenticationError;
 
 + (NSError *)errorWithCode:(NSInteger)code description:(NSString *)description payload:(NSDictionary *)payload;
 

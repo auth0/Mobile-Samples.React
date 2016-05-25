@@ -22,6 +22,7 @@
 
 #import "A0Lock+A0TouchIDLockViewController.h"
 #import "A0TouchIDLockViewController.h"
+#import "A0NavigationController.h"
 
 @implementation A0Lock (A0TouchIDLockViewController)
 
@@ -30,10 +31,17 @@
 }
 
 - (void)presentTouchIDController:(A0TouchIDLockViewController *)touchIDController fromController:(UIViewController *)controller {
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:touchIDController];
+    UIModalPresentationStyle style = UIModalPresentationFullScreen;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        style = UIModalPresentationFormSheet;
     }
-    [controller presentViewController:navController animated:YES completion:nil];
+    [self presentTouchIDController:touchIDController fromController:controller presentationStyle:style];
+}
+
+- (void)presentTouchIDController:(A0TouchIDLockViewController *)touchIDController fromController:(UIViewController *)controller presentationStyle:(UIModalPresentationStyle)presentationStyle {
+    UINavigationController *navigationController = [[A0NavigationController alloc] initWithRootViewController:touchIDController];
+    navigationController.navigationBarHidden = YES;
+    navigationController.modalPresentationStyle = presentationStyle;
+    [controller presentViewController:navigationController animated:YES completion:nil];
 }
 @end

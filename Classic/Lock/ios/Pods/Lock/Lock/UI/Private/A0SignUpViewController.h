@@ -29,6 +29,7 @@
 @interface A0SignUpViewController : UIViewController<A0AuthenticationUIComponent>
 
 @property (copy, nonatomic) void(^onSignUpBlock)(A0UserProfile *profile, A0Token *token);
+@property (copy, nonatomic) void(^onMFARequired)();
 
 @property (copy, nonatomic) A0AuthParameters *parameters;
 @property (assign, nonatomic) BOOL forceUsername;
@@ -38,6 +39,7 @@
 @property (copy, nonatomic) NSString *customMessage;
 @property (strong, nonatomic) A0Connection *defaultConnection;
 @property (strong, nonatomic) A0Lock *lock;
+@property (copy, nonatomic) NSString *identifier;
 
 - (void)addDisclaimerSubview:(UIView *)view;
 - (void)updateUIWithError:(NSError *)error;
