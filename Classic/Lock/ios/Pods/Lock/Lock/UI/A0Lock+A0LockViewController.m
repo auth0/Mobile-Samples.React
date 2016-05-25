@@ -23,6 +23,7 @@
 #import "A0Lock+A0LockViewController.h"
 #import "A0LockViewController.h"
 #import "A0LockSignUpViewController.h"
+#import "A0NavigationController.h"
 
 @implementation A0Lock (A0LockViewController)
 
@@ -35,8 +36,17 @@
 }
 
 - (void)presentLockController:(A0LockViewController *)lockController fromController:(UIViewController *)controller {
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:lockController];
+    UIModalPresentationStyle style = UIModalPresentationFullScreen;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        style = UIModalPresentationFormSheet;
+    }
+    [self presentLockController:lockController fromController:controller presentationStyle:style];
+}
+
+- (void)presentLockController:(A0LockViewController *)lockController fromController:(UIViewController *)controller presentationStyle:(UIModalPresentationStyle)presentationStyle {
+    UINavigationController *navigationController = [[A0NavigationController alloc] initWithRootViewController:lockController];
     navigationController.navigationBarHidden = YES;
+    navigationController.modalPresentationStyle = presentationStyle;
     [controller presentViewController:navigationController animated:YES completion:nil];
 }
 @end

@@ -36,6 +36,7 @@
 #import "A0AuthParameters.h"
 #import "A0Alert.h"
 #import "A0LockConfiguration.h"
+#import "NSError+A0LockErrors.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import "UIViewController+LockNotification.h"
@@ -74,11 +75,16 @@ AUTH0_DYNAMIC_LOGGER_METHODS
     self.title = A0LocalizedString(@"Login");
     self.loginView.identifierType = A0CredentialFieldViewUsername;
     self.loginView.delegate = self;
+    self.loginView.identifier = _identifier;
 
     self.validator = [[A0CredentialsValidator alloc] initWithValidators:@[
                                                                           [[A0UsernameValidator alloc] initWithField:self.loginView.identifierField.textField],
                                                                           [[A0PasswordValidator alloc] initWithField:self.loginView.passwordField.textField],
                                                                           ]];
+}
+
+- (NSString *)identifier {
+    return self.loginView ? self.loginView.identifier : _identifier;
 }
 
 #pragma mark - Enterprise login
@@ -121,7 +127,7 @@ AUTH0_DYNAMIC_LOGGER_METHODS
                     default: {
                         [A0Alert showInController:weakSelf errorAlert:^(A0Alert *alert) {
                             alert.title = A0LocalizedString(@"There was an error logging in");
-                            alert.message = [A0Errors localizedStringForConnectionName:connectionName loginError:error];
+                            alert.message = [error a0_localizedStringErrorForConnectionName:connectionName];
                         }];
                         break;
                     }
@@ -208,7 +214,7 @@ AUTH0_DYNAMIC_LOGGER_METHODS
                     dispatch_async(dispatch_get_main_queue(), ^{
                         completionHandler(NO);
                         NSString *title = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedDescription : A0LocalizedString(@"There was an error logging in");
-                        NSString *message = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedFailureReason : [A0Errors localizedStringForLoginError:error];
+                        NSString *message = [error a0_auth0ErrorWithCode:A0ErrorCodeNotConnectedToInternet] ? error.localizedFailureReason : [error a0_localizedStringForLoginError];
                         [A0Alert showInController:weakSelf errorAlert:^(A0Alert *alert) {
                             alert.title = title;
                             alert.message = message;

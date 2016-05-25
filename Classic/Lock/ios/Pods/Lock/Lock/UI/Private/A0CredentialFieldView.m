@@ -58,6 +58,7 @@
     self.textField.tintColor = [theme colorForKey:A0ThemeTextFieldTextColor];
     self.textField.returnKeyType = self.returnKeyType;
     self.textField.borderStyle = UITextBorderStyleNone;
+    self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.type = A0CredentialFieldViewEmail;
     self.returnKeyType = UIReturnKeyNext;
@@ -95,11 +96,12 @@
             self.iconImageView.image = [[theme imageForKey:A0ThemeIconPhone] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             break;
         case A0CredentialFieldViewOTPCode:
-            self.placeholderText = A0LocalizedString(@"OTP Code");
+            self.placeholderText = A0LocalizedString(@"Verification Code");
             self.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             self.textField.secureTextEntry = YES;
             self.iconImageView.image = [[theme imageForKey:A0ThemeIconLock] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
+    self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.textField.placeholder = nil;
     [self setFieldPlaceholderText:self.placeholderText];
 }

@@ -22,6 +22,7 @@
 
 #import "A0Lock+A0EmailLockViewController.h"
 #import "A0EmailLockViewController.h"
+#import "A0NavigationController.h"
 
 @implementation A0Lock (A0SMSLockViewController)
 
@@ -30,7 +31,7 @@
 }
 
 - (void)presentEmailController:(A0EmailLockViewController *)emailController fromController:(UIViewController *)controller {
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:emailController];
+    UINavigationController *navController = [[A0NavigationController alloc] initWithRootViewController:emailController];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
     }

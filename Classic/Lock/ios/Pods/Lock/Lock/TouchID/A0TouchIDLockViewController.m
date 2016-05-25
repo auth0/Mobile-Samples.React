@@ -73,9 +73,6 @@ AUTH0_DYNAMIC_LOGGER_METHODS
     self = [super init];
     if (self) {
         _lock = lock;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            self.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
         _authenticationParameters = [A0AuthParameters newDefaultParams];
         _cleanOnError = NO;
         _cleanOnStart = NO;
@@ -266,12 +263,17 @@ AUTH0_DYNAMIC_LOGGER_METHODS
 }
 
 - (A0LockControllerSupportedOrientation)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    A0LockControllerSupportedOrientation orientations = UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        orientations = UIInterfaceOrientationMaskAll;
+    }
+    return orientations;
 }
 
 - (void)checkTouchID:(id)sender {
     self.touchIDView.hidden = YES;
     self.loadingView.hidden = NO;
+    [self.activityIndicator startAnimating];
     if (self.cleanOnStart) {
         [self cleanKeys];
     }

@@ -38,6 +38,7 @@
 #import "NSError+A0APIError.h"
 #import "A0ServiceViewModel.h"
 #import "Constants.h"
+#import "NSError+A0LockErrors.h"
 
 #define kCellIdentifier @"ServiceCell"
 
@@ -140,6 +141,7 @@ AUTH0_DYNAMIC_LOGGER_METHODS
     [cell.serviceButton setBackgroundColor:theme.highlightedBackgroundColor forState:UIControlStateHighlighted];
     [cell.serviceButton addTarget:self action:@selector(triggerAuth:) forControlEvents:UIControlEventTouchUpInside];
     cell.serviceButton.tag = indexPath.item;
+    cell.serviceButton.accessibilityLabel = theme.localizedTitle;
     return cell;
 }
 
