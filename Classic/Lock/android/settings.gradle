@@ -1,4 +1,4 @@
-rootProject.name = 'Sample'
+rootProject.name = 'Auth0Sample'
 
 include ':app'
 include ':react-native-lock'

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Sample.app"
-               BlueprintName = "Sample"
-               ReferencedContainer = "container:Sample.xcodeproj">
+               BuildableName = "Auth0Sample.app"
+               BlueprintName = "Auth0Sample"
+               ReferencedContainer = "container:Auth0Sample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "SampleTests.xctest"
-               BlueprintName = "SampleTests"
-               ReferencedContainer = "container:Sample.xcodeproj">
+               BuildableName = "Auth0SampleTests.xctest"
+               BlueprintName = "Auth0SampleTests"
+               ReferencedContainer = "container:Auth0Sample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "SampleTests.xctest"
-               BlueprintName = "SampleTests"
-               ReferencedContainer = "container:Sample.xcodeproj">
+               BuildableName = "Auth0SampleTests.xctest"
+               BlueprintName = "Auth0SampleTests"
+               ReferencedContainer = "container:Auth0Sample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sample.app"
-            BlueprintName = "Sample"
-            ReferencedContainer = "container:Sample.xcodeproj">
+            BuildableName = "Auth0Sample.app"
+            BlueprintName = "Auth0Sample"
+            ReferencedContainer = "container:Auth0Sample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sample.app"
-            BlueprintName = "Sample"
-            ReferencedContainer = "container:Sample.xcodeproj">
+            BuildableName = "Auth0Sample.app"
+            BlueprintName = "Auth0Sample"
+            ReferencedContainer = "container:Auth0Sample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sample.app"
-            BlueprintName = "Sample"
-            ReferencedContainer = "container:Sample.xcodeproj">
+            BuildableName = "Auth0Sample.app"
+            BlueprintName = "Auth0Sample"
+            ReferencedContainer = "container:Auth0Sample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
