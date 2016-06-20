@@ -36,7 +36,12 @@ var ProfileView = React.createClass({
     );
   },
   _onCallApi: function() {
-    fetch(API_ENDPOINT)
+    fetch(API_ENDPOINT, {
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer ' + this.props.token.idToken
+        }
+      })
       .then((response) => response.text())
       .then((responseText) => {
         Alert.alert(
