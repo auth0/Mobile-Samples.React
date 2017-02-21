@@ -52,8 +52,6 @@
 
 @implementation A0SMSCodeViewController
 
-AUTH0_DYNAMIC_LOGGER_METHODS
-
 - (instancetype)initWithViewModel:(A0PasswordlessLockViewModel *)viewModel {
     self = [self init];
     if (self) {
@@ -98,7 +96,8 @@ AUTH0_DYNAMIC_LOGGER_METHODS
     self.codeFieldView = codeField;
     self.messageLabel = messageLabel;
     self.loginButton = loginButton;
-
+    self.messageLabel.numberOfLines = 0;
+    
     self.title = A0LocalizedString(@"Enter SMS code");
     A0Theme *theme = [A0Theme sharedInstance];
     [theme configurePrimaryButton:self.loginButton];
